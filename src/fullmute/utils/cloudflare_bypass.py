@@ -32,7 +32,7 @@ class CloudflareBypass:
                 if html and status != 403 and not self._is_cloudflare_challenge(html):
                     return html, headers_dict, cookies_dict, status
             except Exception as e:
-                logger.debug(f"Approach failed: {e}")
+                logger.debug(f"Approach failed on {url!r}: {e}")
                 continue
         
         # Если все подходы не сработали, возвращаем результат последней попытки
