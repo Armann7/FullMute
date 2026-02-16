@@ -83,7 +83,7 @@ class PluginDetector:
                 plugins.add((clean_plugin, version))
 
         
-        comment_pattern = r'<!--.*?(?:powered by|developed by|by|plugin).*?([^,\s\'\"<>]+).*?-->'
+        comment_pattern = r'<!--.*?(?:powered by|developed by|\bby\b|plugin).*?([^,\s\'\"<>]+).*?(?:-->)?'
         matches5 = re.findall(comment_pattern, self.html, re.IGNORECASE)
         for plugin in matches5:
             clean_plugin = re.sub(r'[^\w\-]', '', plugin)
