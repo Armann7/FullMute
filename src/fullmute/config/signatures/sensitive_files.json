@@ -9,8 +9,18 @@
     },
     "confidence": 95
   },
+  "git_exposed_dot_ignore": {
+    "paths": ["/.gitignore"],
+    "verification": {
+      "method": "content",
+      "patterns": [],
+      "must_have": [],
+      "must_not_have": ["<!DOCTYPE", "<html", "<body"]
+    },
+    "confidence": 95
+  },
   "git_exposed": {
-    "paths": ["/.git/", "/git/", "/.gitignore"],
+    "paths": ["/.git/", "/git/"],
     "verification": {
       "method": "directory_listing",
       "patterns": ["HEAD", "config", "index", "objects"],
