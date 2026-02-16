@@ -6,3 +6,4 @@ fake-useragent
 psutil
 sqlalchemy
 requests
+brotli
