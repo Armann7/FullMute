@@ -98,7 +98,7 @@ class SensitiveFileVerifier:
     async def _fetch_and_verify_file(self, session: aiohttp.ClientSession, file_url: str,
                                    file_type: str, verification: Dict[str, Any]) -> Dict[str, Any]:
         """Отдельный метод для получения и проверки файла с возможностью таймаута"""
-        async with session.get(file_url, ssl=False) as response:
+        async with session.get(file_url, ssl=False, allow_redirects=False) as response:
             if response.status == 200:
                 content = await response.text()
 
