@@ -124,19 +124,13 @@ class SensitiveFileVerifier:
         must_not_have = verification.get("must_not_have", [])
 
         # Проверяем must_not_have условия
-        if must_not_have:
-            for pattern in must_not_have:
-                if re.search(pattern, content, re.IGNORECASE):
-                    return False
+        for pattern in must_not_have:
+            if re.search(pattern, content, re.IGNORECASE):
+                return False
 
         # Проверяем must_have условия
-        if must_have:
-            found_required = False
-            for pattern in must_have:
-                if re.search(pattern, content, re.IGNORECASE):
-                    found_required = True
-                    break
-            if not found_required:
+        for pattern in must_have:
+            if not re.search(pattern, content, re.IGNORECASE):
                 return False
 
         if method == "content" and patterns:
