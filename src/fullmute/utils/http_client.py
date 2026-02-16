@@ -96,7 +96,7 @@ class HttpClient:
                     allow_redirects=True,
                     max_redirects=self.max_redirects  # Используем настроенный лимит редиректов
                 ) as response:
-                    html = await response.text()
+                    html = await response.text(errors='backslashreplace')
                     headers_dict = dict(response.headers)
                     cookies_dict = {k: v.value for k, v in response.cookies.items()}
 

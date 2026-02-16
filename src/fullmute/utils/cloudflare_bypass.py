@@ -58,7 +58,7 @@ class CloudflareBypass:
             for attempt in range(self.max_retries):
                 try:
                     async with session.get(url, headers=session_headers, ssl=False) as response:
-                        html = await response.text()
+                        html = await response.text(errors='backslashreplace')
                         headers_dict = dict(response.headers)
                         cookies_dict = {k: v.value for k, v in response.cookies.items()}
                         
@@ -95,7 +95,7 @@ class CloudflareBypass:
                     current_headers["User-Agent"] = random.choice(USER_AGENTS)
                     
                     async with session.get(url, headers=current_headers, ssl=False) as response:
-                        html = await response.text()
+                        html = await response.text(errors='backslashreplace')
                         headers_dict = dict(response.headers)
                         cookies_dict = {k: v.value for k, v in response.cookies.items()}
                         
@@ -127,7 +127,7 @@ class CloudflareBypass:
                 try:
                     # Сначала получаем страницу без follow redirects
                     async with session.get(url, headers=session_headers, allow_redirects=True, ssl=False) as response:
-                        html = await response.text()
+                        html = await response.text(errors='backslashreplace')
                         headers_dict = dict(response.headers)
                         cookies_dict = {k: v.value for k, v in response.cookies.items()}
                         
