@@ -122,14 +122,19 @@ class PluginDetector:
 
         
         meta_pattern = r'(?:name|class)=["\'][^"\']*["\'][^>]*>\s*[^<]*["\']([^"\'>\s]+)["\']'
-        
-        generator_pattern = r'content=["\'][^"\']*by[^"\']*([^"\'>\s]+)[^"\']*["\'][^>]*name=["\'][^"\']*generator'
-        matches4 = re.findall(generator_pattern, self.html, re.IGNORECASE)
-        for theme in matches4:
-            clean_theme = re.sub(r'[^\w\-]', '', theme)
-            if len(clean_theme) > 2:
-                version = self._extract_version_from_text(clean_theme, self.html)
-                themes.add((clean_theme, version))
+
+        # This expression is quite complex, and some pages can take a very long time to parse. Parsing only the lines
+        # that contain the word 'generator' is much faster and more reliable.
+        generator_pattern_re = re.compile(
+            r'''\bcontent=["'][^"']*\bby\b[^"']*([^"'>\s]+)[^"']*["'][^>]*name=["'][^"']*generator''')
+        for line in self.html.split():
+            if 'generator' in line:
+                matches4 = generator_pattern_re.findall(line)
+                for theme in matches4:
+                    clean_theme = re.sub(r'[^\w\-]', '', theme)
+                    if len(clean_theme) > 2:
+                        version = self._extract_version_from_text(clean_theme, self.html)
+                        themes.add((clean_theme, version))
 
         return list(themes)
 
