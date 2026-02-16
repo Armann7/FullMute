@@ -100,7 +100,7 @@ class SensitiveFileVerifier:
         """Отдельный метод для получения и проверки файла с возможностью таймаута"""
         async with session.get(file_url, ssl=False, allow_redirects=False) as response:
             if response.status == 200:
-                content = await response.text()
+                content = await response.text(errors='backslashreplace')
 
                 is_verified = self._verify_content(content, verification)
 
